@@ -9,7 +9,13 @@ def agregar_nuevoestudiante():
         return "DNI duplicado, ingrese uno nuevo"
     else:
         nombre = input("Ingrese su nombre: ").strip()
+        while not nombre.isalpha():
+            print("Datos invalidos. Por favor revisar e ingresar nuevamente")
+            nombre = input("Ingrese su nombre: ").strip()
         apellido = input("Ingrese su apellido: ").strip()
+        while not apellido.isalpha():
+            print("Datos invalidos. Por favor revisar e ingresar nuevamente")
+            apellido = input("Ingrese su apellido: ").strip()
     validarNombre=input("Está seguro que desea cargar estos datos? (S/N) ")
     while validarNombre not in ("S","s","N","n"):
         print("Comando desconocido")
@@ -49,10 +55,10 @@ def agregar_materia():
         return "Materia agregada exitosamente"
 
 def mostrar_materias():
-    if not lista_materias:
-        return "No hay materias registradas"
+    for materia in lista_materias:
+        if materia not in lista_materias:
+            return "No hay materias registradas"
     else:
-        for materia in lista_materias:
             print(materia)
 
 # Relación entre estudiantes y materias
