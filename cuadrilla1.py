@@ -1,11 +1,10 @@
-
 def cuadrilla():
     lado = 100
     print("-" * lado)#Borde superior
-    lista = ["Matematica", "Lengua", "Informatica", "Teatro", "Geografia", "Fisica", "Ciencias Naturales"] #Lista de materias y opcion de salir
-    print( "1 - Matematica  | 2 - Lengua   |  3 - Informatica   | 4 - Teatro  ")
+    lista = ["Fundamentos de Informatica", "Algebra ", "Teoria de Sistemas", "Fundamentos de Quimica", "Arquitectura de Computadoras", "Sistemas Operativos", "Programacion I"] #Lista de materias y opcion de salir
+    print( "1 - Fundamentos de Informatica  | 2 - Algebra   |  3 - Teoria de Sistemas   | 4 - Fundamentos de Quimica  ")
     print()
-    print( "5 - Geografia   | 6 - Fisica   |  7 - Ciencias Naturales   | salir (-1)  ") #Listas de materias ya mostradas en pantalla
+    print( "5 - Arquitectura de Computadoras   | 6 - Sistemas Operativos   |  7 - Programacion I   | salir (-1)  ") #Listas de materias ya mostradas en pantalla
     lado = 100
     print("-" * lado)#Borde inferior
     print()
@@ -30,18 +29,11 @@ def cuadrilla():
             return lista [6]
         elif materia == -1:
             normal = normal + 1
-            return "Gracias por usar nuestro programa" ####Arreglar####
+            return "Gracias por usar nuestro programa" 
         else:
             return "Error al ingresar la materia"
 
 resultado_cuadrilla = cuadrilla()
 
 print(resultado_cuadrilla)
-    
-
-
-
-
-
-
-
+print()
