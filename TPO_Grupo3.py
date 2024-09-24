@@ -3,63 +3,87 @@ diccionario_de_estudiantes = {}
 def agregar_nuevoestudiante():
     DNI = input("Ingrese su número de DNI: ")
     while not DNI.isdigit():
-        print("Datos invalidos. Por favor revisar e ingresar nuevamente")
+        print("Datos inválidos. Por favor revisar e ingresar nuevamente")
         DNI = input("Ingrese su número de DNI: ")
+    
     if DNI in diccionario_de_estudiantes:
         return "DNI duplicado, ingrese uno nuevo"
     else:
         nombre = input("Ingrese su nombre: ").strip()
         while not nombre.isalpha():
-            print("Datos invalidos. Por favor revisar e ingresar nuevamente")
+            print("Datos inválidos. Por favor revisar e ingresar nuevamente")
             nombre = input("Ingrese su nombre: ").strip()
+        
         apellido = input("Ingrese su apellido: ").strip()
         while not apellido.isalpha():
-            print("Datos invalidos. Por favor revisar e ingresar nuevamente")
+            print("Datos inválidos. Por favor revisar e ingresar nuevamente")
             apellido = input("Ingrese su apellido: ").strip()
-    validarNombre=input("Está seguro que desea cargar estos datos? (S/N) ")
-    while validarNombre not in ("S","s","N","n"):
-        print("Comando desconocido")
-        validarNombre=input("Está seguro que desea cargar estos datos? (S/N) ")
-    if validarNombre in ("S","s"):
-        diccionario_de_estudiantes[DNI] = (nombre, apellido)
-        return "Estudiante agregado exitosamente"
-    if validarNombre in ("N","n"):
-        return agregar_nuevoestudiante()
+        
+        validarNombre = input("¿Está seguro que desea cargar estos datos? (S/N): ")
+        while validarNombre not in ("S", "s", "N", "n"):
+            print("Comando desconocido")
+            validarNombre = input("¿Está seguro que desea cargar estos datos? (S/N): ")
+        
+        if validarNombre in ("S", "s"):
+            diccionario_de_estudiantes[DNI] = (nombre, apellido)
+            return "Estudiante agregado exitosamente"
+        if validarNombre in ("N", "n"):
+            return agregar_nuevoestudiante()
+
 
 def mostrar_estudiantes():
     if not diccionario_de_estudiantes:
         return "No hay estudiantes registrados"
     else:
-        for DNI, (nombre, apellido) in diccionario_de_estudiantes.items():
-            print(f"DNI: {DNI}, Nombre: {nombre}, Apellido: {apellido}")
+        estudiantes = [f"DNI: {DNI}, Nombre: {nombre}, Apellido: {apellido}"
+                       for DNI, (nombre, apellido) in diccionario_de_estudiantes.items()]
+        return "\n".join(estudiantes)
+
 
 def buscar_estudiante():
-    DNI = input("Ingrese su número de DNI: ")
-    if DNI in diccionario_de_estudiantes:
-        nombre, apellido = diccionario_de_estudiantes[DNI]
-        return f"Nombre: {nombre}, Apellido: {apellido}"
-    else:
-        return "Estudiante no encontrado"
+    while True:
+        DNI = input("Ingrese su número de DNI o escriba 'salir' para volver al menú: ").strip()
+        
+        if DNI.lower() == 'salir':
+            return "Saliendo de la búsqueda de estudiantes..."
+
+        if not DNI.isdigit():
+            print("El DNI debe ser un número. Por favor, intente nuevamente.")
+            continue
+
+        if DNI in diccionario_de_estudiantes:
+            nombre, apellido = diccionario_de_estudiantes[DNI]
+            return f"Nombre: {nombre}, Apellido: {apellido}"
+        else:
+            print("Estudiante no encontrado. Intente nuevamente.")
+
+
 
 # Gestión de materias
 lista_materias = []
 
 def agregar_materia():
-    materia = input("Ingrese el nombre de la materia: ").strip()
-    if materia in lista_materias:
-        return "Materia ya registrada"
-    elif not materia:
-        return "Nombre de materia inválido"
-    else:
-        lista_materias.append(materia)
-        return "Materia agregada exitosamente"
+    while True:
+        materia = input("Ingrese el nombre de la materia (o 'salir' para cancelar): ").strip()
+        
+        if materia.lower() == 'salir':
+            return "Operación cancelada por el usuario."
+        
+        if not materia.isalpha():
+            print("Nombre de materia inválido. No debe contener números ni caracteres especiales.")
+        elif materia in lista_materias:
+            print("Materia ya registrada")
+        else:
+            lista_materias.append(materia)
+            return "Materia agregada exitosamente"
 
 def mostrar_materias():
-    for materia in lista_materias:
-        if materia not in lista_materias:
-            return "No hay materias registradas"
+    if not lista_materias:
+        return "No hay materias registradas"
     else:
-            print(materia)
+        return "\n".join(lista_materias)
+
+
 
 # Relación entre estudiantes y materias
 diccionario_estudiantes_materias = {}
@@ -70,10 +94,11 @@ def asignar_materia_a_estudiante():
     if DNI in diccionario_de_estudiantes:
         if not lista_materias:
             return "No hay materias registradas"
+        
         print("Materias disponibles:")
         for materia in lista_materias:
             print(materia)
-
+        
         materia_asignada = input("Ingrese el nombre de la materia a asignar: ").strip()
         
         if materia_asignada in lista_materias:
@@ -88,9 +113,9 @@ def asignar_materia_a_estudiante():
                 return f"Materia '{materia_asignada}' asignada al estudiante con DNI {DNI}"
         else:
             return "Materia no registrada"
-            materia_asignada = input("Ingrese el nombre de la materia a asignar: ").strip()
     else:
         return "Estudiante no encontrado"
+
 
 def mostrar_materias_estudiante():
     DNI = input("Ingrese el DNI del estudiante: ")
@@ -98,14 +123,12 @@ def mostrar_materias_estudiante():
     if DNI in diccionario_estudiantes_materias:
         materias = diccionario_estudiantes_materias[DNI]
         if materias:
-            print(f"Materias asignadas al estudiante con DNI {DNI}:")
-            for materia in materias:
-                # print(materia)
-                return materia
+            return f"Materias asignadas al estudiante con DNI {DNI}:\n" + "\n".join(materias)
         else:
             return "El estudiante no tiene materias asignadas"
     else:
-        return "Estudiante no tiene materias asignadas o no está registrado"
+        return "Estudiante no registrado o no tiene materias asignadas"
+
 
 # Programa principal
 while True:
@@ -124,13 +147,13 @@ while True:
     if opcion == '1':
         print(agregar_nuevoestudiante())
     elif opcion == '2':
-        mostrar_estudiantes()
+        print(mostrar_estudiantes())
     elif opcion == '3':
         print(buscar_estudiante())
     elif opcion == '4':
         print(agregar_materia())
     elif opcion == '5':
-        mostrar_materias()
+        print(mostrar_materias())
     elif opcion == '6':
         print(asignar_materia_a_estudiante())
     elif opcion == '7':
