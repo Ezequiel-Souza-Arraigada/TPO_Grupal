@@ -1,10 +1,11 @@
 diccionario_de_estudiantes = {}
 
 def agregar_nuevoestudiante():
-    DNI = input("Ingrese su número de DNI: ")
-    while not DNI.isdigit():
-        print("Datos inválidos. Por favor revisar e ingresar nuevamente")
-        DNI = input("Ingrese su número de DNI: ")
+    DNI = input("Ingrese su número de DNI (8 dígitos): ")
+
+    while not (DNI.isdigit() and len(DNI) == 8):
+        print("Datos inválidos. El DNI debe contener exactamente 8 dígitos.")
+        DNI = input("Ingrese su número de DNI (8 dígitos): ")
     
     if DNI in diccionario_de_estudiantes:
         return "DNI duplicado, ingrese uno nuevo"
