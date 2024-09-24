@@ -129,21 +129,21 @@ def asignar_materia_a_estudiante():
 
 
 def mostrar_materias_estudiante():
-    while True:
-        DNI = input("Ingrese el DNI del estudiante: ")
-        
+    DNI = input("Ingrese el DNI del estudiante: ")
+
+    while not DNI.isdigit() or DNI not in diccionario_estudiantes_materias:
         if not DNI.isdigit():
-            print("El DNI ingresado no es válido. Debe ser un número. Intente nuevamente.")
-            continue
-        
-        if DNI in diccionario_estudiantes_materias:
-            materias = diccionario_estudiantes_materias[DNI]
-            if materias:
-                return f"Materias asignadas al estudiante con DNI {DNI}:\n" + "\n".join(materias)
-            else:
-                return "El estudiante no tiene materias asignadas"
+            print("El DNI ingresado no es válido. Debe ser un número.")
         else:
-            print("Estudiante no registrado o no tiene materias asignadas. Intente nuevamente.")
+            print("Estudiante no registrado o no tiene materias asignadas.")
+        
+        DNI = input("Ingrese el DNI del estudiante nuevamente: ")
+
+    materias = diccionario_estudiantes_materias[DNI]
+    if materias:
+        return f"Materias asignadas al estudiante con DNI {DNI}:\n" + "\n".join(materias)
+    else:
+        return "El estudiante no tiene materias asignadas."
 
 
 # Programa principal
