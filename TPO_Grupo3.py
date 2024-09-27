@@ -166,39 +166,37 @@ def asignar_materia_a_estudiante():
     while True:
         DNI = input("Ingrese el DNI del estudiante: ")
         
-        if not DNI.isdigit():
-            print("DNI inválido. Debe ser un número.")
-            continue
-        
-        if DNI in diccionario_de_estudiantes:
-            if not lista_materias:
-                return "No hay materias registradas"
-            
-            print("Materias disponibles:")
-            for materia in lista_materias:
-                print(materia)
-            
-            while True:
-                materia_asignada = input("Ingrese el nombre de la materia a asignar: ").strip()
+        if DNI.isdigit():
+            if DNI in diccionario_de_estudiantes:
+                if not lista_materias:
+                    return "No hay materias registradas"
                 
-                if not materia_asignada.isalpha():
-                    print("Nombre de materia inválido. No debe contener números ni caracteres especiales.")
-                    continue
+                print("Materias disponibles:")
+                for materia in lista_materias:
+                    print(materia)
                 
-                if materia_asignada in lista_materias:
-                    if DNI in diccionario_estudiantes_materias:
-                        if materia_asignada not in diccionario_estudiantes_materias[DNI]:
-                            diccionario_estudiantes_materias[DNI].append(materia_asignada)
-                            return f"Materia '{materia_asignada}' asignada al estudiante con DNI {DNI}"
+                while True:
+                    materia_asignada = input("Ingrese el nombre de la materia a asignar: ").strip()
+                    
+                    if materia_asignada.isalpha():
+                        if materia_asignada in lista_materias:
+                            if DNI in diccionario_estudiantes_materias:
+                                if materia_asignada not in diccionario_estudiantes_materias[DNI]:
+                                    diccionario_estudiantes_materias[DNI].append(materia_asignada)
+                                    return f"Materia '{materia_asignada}' asignada al estudiante con DNI {DNI}"
+                                else:
+                                    return "El estudiante ya tiene esta materia asignada"
+                            else:
+                                diccionario_estudiantes_materias[DNI] = [materia_asignada]
+                                return f"Materia '{materia_asignada}' asignada al estudiante con DNI {DNI}"
                         else:
-                            return "El estudiante ya tiene esta materia asignada"
+                            print("Materia no registrada. Intente nuevamente.")
                     else:
-                        diccionario_estudiantes_materias[DNI] = [materia_asignada]
-                        return f"Materia '{materia_asignada}' asignada al estudiante con DNI {DNI}"
-                else:
-                    print("Materia no registrada. Intente nuevamente.")
+                        print("Nombre de materia inválido. No debe contener números ni caracteres especiales.")
+            else:
+                print("Estudiante no encontrado. Intente nuevamente.")
         else:
-            print("Estudiante no encontrado. Intente nuevamente.")
+            print("DNI inválido. Debe ser un número.")
 
 
 def mostrar_materias_estudiante():
